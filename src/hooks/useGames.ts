@@ -1,13 +1,11 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { CACHE_GAMES_KEY, TWENTY_FOUR_HOURS } from "../constants";
 import gameService, { Game } from "../services/game-service";
-import { Genre } from "../services/genre-service";
 import { FetchResponse } from "../services/http-service";
-import { Platform } from "../services/platform-service";
 
 export interface GameQuery {
-  genre: Genre | null;
-  platform: Platform | null;
+  genreId?: number;
+  platformId?: number;
   sortOrder: string;
   searchText: string;
 }
@@ -18,8 +16,8 @@ const useGames = (gameQuery: GameQuery) => {
     queryFn: ({ pageParam = 1 }) =>
       gameService.getAll({
         params: {
-          genres: gameQuery.genre?.id,
-          parent_platforms: gameQuery.platform?.id,
+          genres: gameQuery.genreId,
+          parent_platforms: gameQuery.platformId,
           ordering: gameQuery.sortOrder,
           search: gameQuery.searchText,
           page: pageParam,
