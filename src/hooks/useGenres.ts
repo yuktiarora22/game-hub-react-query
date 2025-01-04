@@ -8,7 +8,7 @@ const useGenres = () =>
     queryKey: CACHE_GENRES_KEY,
     queryFn: genreService.getAll,
     staleTime: TWENTY_FOUR_HOURS,
-    initialData: { count: genres.length, results: genres },
+    initialData: genres,
   });
 
 export default useGenres;
