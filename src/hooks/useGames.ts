@@ -1,16 +1,12 @@
-import { useInfiniteQuery } from "@tanstack/react-query";
-import { CACHE_GAMES_KEY, TWENTY_FOUR_HOURS } from "../constants";
-import gameService, { Game } from "../services/game-service";
-import { FetchResponse } from "../services/http-service";
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { CACHE_GAMES_KEY, TWENTY_FOUR_HOURS } from '../constants';
+import gameService, { Game } from '../services/game-service';
+import { FetchResponse } from '../services/http-service';
+import useGameQueryStore from '../store';
 
-export interface GameQuery {
-  genreId?: number;
-  platformId?: number;
-  sortOrder: string;
-  searchText: string;
-}
+const useGames = () => {
+  const gameQuery = useGameQueryStore((s) => s.gameQuery);
 
-const useGames = (gameQuery: GameQuery) => {
   return useInfiniteQuery<FetchResponse<Game>, Error>({
     queryKey: [...CACHE_GAMES_KEY, gameQuery],
     queryFn: ({ pageParam = 1 }) =>
