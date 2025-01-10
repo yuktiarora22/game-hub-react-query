@@ -1,5 +1,5 @@
-import { AxiosRequestConfig } from "axios";
-import apiClient from "./api-client";
+import { AxiosRequestConfig } from 'axios';
+import apiClient from './api-client';
 
 export interface FetchResponse<T> {
   count: number;
@@ -12,6 +12,10 @@ class HttpService<T> {
 
   getAll = (requestConfig?: AxiosRequestConfig): Promise<FetchResponse<T>> => {
     return apiClient.get(this.endpoint, requestConfig).then((res) => res.data);
+  };
+
+  get = (id: string | number): Promise<T> => {
+    return apiClient.get(`${this.endpoint}/${id}`).then((res) => res.data);
   };
 
   create = (entity: T): Promise<T> => {
